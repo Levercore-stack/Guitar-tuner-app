@@ -1,0 +1,66 @@
+name: Bootstrap Lever Tuner Android
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'bootstrap/**'
+      - '.github/workflows/bootstrap-android.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-and-expand:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tuner repository
+        uses: actions/checkout@v4
+      - name: Expand verified starter source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/lever-source"
+          unzip -q bootstrap/Lever_Tuner_Android_Starter_v0.1.zip -d "$RUNNER_TEMP/lever-source"
+          test -f "$RUNNER_TEMP/lever-source/guitar-tuner-android-v0.1/app/build.gradle.kts"
+          cp -a "$RUNNER_TEMP/lever-source/guitar-tuner-android-v0.1/." .
+          test -f app/src/main/java/com/levercore/guitartuner/domain/PitchEngine.kt
+      - name: Configure Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Configure Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Prepare Android SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          "$SDKMANAGER" --install 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Compile Android debug APK
+        run: gradle --no-daemon :app:assembleDebug
+      - name: Verify output
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          sha256sum app/build/outputs/apk/debug/app-debug.apk
+      - name: Materialize readable source on main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/workflows/android-apk.yml .gitignore README.md app build.gradle.kts docs gradle.properties settings.gradle.kts
+          if ! git diff --cached --quiet; then
+            git commit -m "Materialize tested Lever Tuner v0.1 native Android source"
+            git push origin HEAD:main || echo 'WARN: source push did not succeed; bootstrap artifact remains available'
+          fi
+      - name: Upload direct-build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lever-tuner-android-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
