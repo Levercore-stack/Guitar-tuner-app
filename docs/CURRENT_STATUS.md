@@ -1,15 +1,34 @@
 # Guitar Tuner — current project status
+Updated 2026-10-08. ACTIVE: native Android v0.1 built; physical Google Pixel / actual guitar test remains outstanding.
 
-Updated 2026-10-08. **ACTIVE / hardware-validation prototype**, NOT an accepted Android build or finished app.
+## Identity and authority
+- Official displayed app name: Guitar Tuner. User chooses name, visuals, features, privacy, and future maintenance.
+- Canonical source: https://github.com/Levercore-stack/Guitar-tuner-app (main branch; check HEAD live).
+- Native Kotlin and Jetpack Compose; standalone personal Pixel app. No ads, subscriptions, accounts, INTERNET permission, analytics, or network-based pitch processing.
+- The source is now directly readable in app/, docs/, and root Gradle files. The original source backup remains in its existing Guitar Tuner Drive project folder, separately from the canonical GitHub source.
+- Locked workflow v1.0: https://drive.google.com/file/d/1cn2002chdPbH8tQVSbjABAwDtIWGtx_u/view
+- Transfer experiment: https://docs.google.com/document/d/13EdsFBaSlfZ9SfIqOBxz6QrF-RgbNQIX3raIjyQYXnc/edit
 
-**Source stage:** 17-file native Kotlin/Jetpack Compose starter in `Lever_Tuner_Android_Starter_v0.1.zip` in this project Drive folder; not uploaded to GitHub because the user has not created a dedicated tuner repository yet. Do not use the `workout-logger` repository for this unrelated app.
+## Build evidence
+- First successful GitHub Actions compilation, source import and corrected user-visible branding: https://github.com/Levercore-stack/Guitar-tuner-app/actions/runs/37850537264
+- Original action SHA ff2581e571e8702a803b34d209dc8dd78f1bc96a; source was then committed to main by GitHub Actions. Read current HEAD, not just this historical SHA.
+- GitHub Actions APK artifact 11580704554 named guitar-tuner-debug-apk (not expired when retrieved).
+- Verified debug APK sha256 d0edbaab807037d428a1a35fbcd587b18a1c12940a4dce9af814ae59adb1ef84, size 9478721 bytes. Compiled Android package archive checked for dex, manifest and resource table.
+- Exact debug test APK available as ChatGPT attachment in the active build session. Store direct Drive APK and its link when export/upload becomes available.
+- Readable GitHub source imported successfully. A redundant old CI workflow has been removed to prevent duplicate misleading failures.
 
-**User's exact UX**: standard tuning six strings E–A–D–G–B–E on opening; select string; top note/cents meter with flat RED, sharp AMBER/ORANGE, centered IN-TUNE GREEN; visible movement toward center; drop D, open E, open D, open G, DADGAD presets; gray/graphite dark background; microphone permission explicit; no ads, sign-in, cloud or unnecessary Internet.
+## App scope and modularity
+- Six-string standard E2 A2 D3 G3 B3 E4 default; select strings; Drop D, Open E, Open D, Open G, DADGAD preset support.
+- Flat=red, sharp=amber/orange, in-tune=green. Dark graphite palette, large tuning meter and visible cents. Appearance and features are user-controlled; avoid ad/subscription dependencies.
+- domain/PitchEngine.kt DSP algorithm, domain/Tunings.kt presets, audio/PitchSource.kt abstraction, audio/MicrophoneCapture.kt Android AudioRecord, ui/TunerScreen.kt user flow, ui/TunerTheme.kt style, MainActivity.kt native entry.
+- Pure Kotlin synthetic frequencies were preliminarily accurate (within ~0.3 cents) for seven tones; synthetic silence/noise rejection passed. Harmonic-heavy low-E2 example returned roughly one octave high: must test actual guitar and revise DSP only if real evidence supports it.
 
-**Implementation in ZIP**: `domain/Tunings.kt` six accurate presets; `domain/PitchEngine.kt` YIN-style frequency detector; `audio/PitchSource.kt` interchangeable audio contract; `audio/MicrophoneCapture.kt` Android microphone adapter; `ui/TunerScreen.kt` single-screen tuner, selectable strings and color-coded cents meter; `ui/TunerTheme.kt` interchangeable skin; thin `MainActivity.kt`; GitHub Actions APK workflow. Mic stops on UI stop and on Activity leaving foreground. Alpha allows selected string, not yet custom tunings or calibrated live guitar QA.
+## Physical acceptance pending
+- Install APK on user's Pixel. On real guitar test low E2, A2, D3, G3, B3, E4, Drop D D2, both out-of-tune directions, room noise, clipped/sustained notes and silent input.
+- Verify microphone permission grant/denial, stop/release mic on app background, screen lock behavior, legibility and tuning latency/stability.
+- Verify app branding visible in launcher and inside UI; no ads, account or payment.
+- Debug APK uses the CI test signer; stable secure signing for future in-place updates is a separate unresolved gate. Do not uninstall apps with important data without safe recovery.
+- Do not claim actual Pixel tuner acceptance until user reports it. No third-party DSP dependency copied so far.
 
-**Verified**: ZIP integrity; JVM Kotlin smoke checks for six exact preset arrays, seven synthetic fundamental tones (~D2 through E4), silence gate and cents color direction. **NOT verified**: Android SDK/Gradle full APK compile, Pixel installation, physical microphone/permission denial, guitar pitch stability/noise/false octave, real string tuning, lifecycle on screen-lock. Never confuse these.
-
-**Next action**: user creates an empty dedicated GitHub repository such as `Levercore-stack/guitar-tuner`. Upload source files preserving paths, run Android APK workflow, resolve compile errors. Then deliver direct test APK via Drive and conduct physical Pixel hardware tests on all six strings. Lock app signer securely before non-disposable data or broader sharing; do NOT reuse public workout-app prototype signing key. Use `docs/MODULARITY_CONTRACT.md` when revising individual components.
-
-**Prior locked workflow:** https://drive.google.com/file/d/1cn2002chdPbH8tQVSbjABAwDtIWGtx_u/view. It is a candidate playbook, not an installed skill. First cross-app trial occurs when tuner reaches real APK and Pixel test.
+## Single next action
+Install the validated v0.1 test APK on Pixel and report whether the mic permission works and the low E/A/D/G/B/high E strings display plausible, stable pitch and cents. Record observations in project status and the workflow process-trial file; resolve octave errors in a bounded DSP pass after hardware evidence.

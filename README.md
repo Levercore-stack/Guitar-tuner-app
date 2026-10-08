@@ -1,6 +1,8 @@
 # Guitar Tuner — native Google Pixel Android project
 
-**Status: source-only early prototype, NOT YET COMPILED or installed on a phone.**
+**Status: v0.1 native Android APK compiled successfully through GitHub Actions; real Google Pixel microphone/guitar acceptance pending.**
+
+**Latest verified build:** https://github.com/Levercore-stack/Guitar-tuner-app/actions/runs/37850537264 (artifact `guitar-tuner-debug-apk`; artifact 11580704554). The debug APK is a test installer, not a production release or a proven in-place upgrade signer.
 
 This is a dedicated Android application, not a website, browser shell, or a module inside My Gym Log. No ads, subscriptions, accounts, network permission, audio file recording, or cloud calls.
 
