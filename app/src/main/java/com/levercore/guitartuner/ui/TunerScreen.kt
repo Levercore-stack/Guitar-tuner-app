@@ -131,7 +131,7 @@ fun TunerScreen(){
                 }
             }
         }
-        // The guitar neck uses a warmer, instrument-like slate distinct from tuning controls.
+        // Cool ebony-charcoal fretboard contrasts with the blue tuning tray without brown tones.
         Column(Modifier.fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .background(TunerNeckFrame)
@@ -163,12 +163,12 @@ private fun PresetTile(preset:GuitarTuning,selected:Boolean,
     modifier:Modifier=Modifier,onClick:()->Unit){
     Surface(onClick=onClick, modifier=modifier.height(46.dp),
         shape=RoundedCornerShape(12.dp),
-        color=if(selected)TunerSelection else TunerPresetTile,
-        border=BorderStroke(1.dp,if(selected)TunerAccent else TunerTuningBorder)){
+        color=if(selected)TunerSelectedPreset else TunerPresetTile,
+        border=BorderStroke(if(selected)2.5.dp else 1.dp,if(selected)TunerGold else TunerTuningBorder)){
         Box(contentAlignment=Alignment.Center){
             Text(preset.name,style=MaterialTheme.typography.labelLarge,
                 fontWeight=if(selected)FontWeight.Bold else FontWeight.Medium,
-                color=if(selected)Color.White else Color(0xFFE4EDF2))
+                color=if(selected)TunerGold else Color(0xFFE4EDF2))
         }
     }
 }
@@ -183,7 +183,7 @@ private fun GuitarNeck(tuning:GuitarTuning,selected:Int,onSelect:(Int)->Unit){
                 size=Size(cell,size.height))
             for(fret in 1..5){
                 val y=size.height*fret/6f
-                drawLine(Color(0xFFD4C4A9).copy(alpha=0.50f),
+                drawLine(Color(0xFFACBCCB).copy(alpha=0.46f),
                     Offset(0f,y),Offset(size.width,y),strokeWidth=1.5f)
             }
             for(i in 0..5){
@@ -208,7 +208,7 @@ private fun GuitarNeck(tuning:GuitarTuning,selected:Int,onSelect:(Int)->Unit){
                                 RoundedCornerShape(5.dp))
                                 .padding(horizontal=6.dp,vertical=2.dp))
                         Surface(shape=RoundedCornerShape(11.dp),
-                            color=if(active)TunerAccent else Color(0xFF3A4750),
+                            color=if(active)TunerAccent else Color(0xFF34434F),
                             border=BorderStroke(1.dp,if(active)TunerAccent else TunerOutline)){
                             Column(Modifier.padding(horizontal=5.dp,vertical=7.dp),
                                 horizontalAlignment=Alignment.CenterHorizontally){
