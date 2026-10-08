@@ -8,16 +8,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-val TunerBackground=Color(0xFF15171D)
-val TunerPanel=Color(0xFF23262D)
-val TunerGreen=Color(0xFF67E3A2)
-val TunerFlat=Color(0xFFF06372)
-val TunerSharp=Color(0xFFF5A64A)
+val TunerBackground=Color(0xFF111720)
+val TunerPanel=Color(0xFF1A242E)
+val TunerNeck=Color(0xFF202B35)
+val TunerSelection=Color(0xFF294251)
+val TunerOutline=Color(0xFF405360)
+val TunerAccent=Color(0xFF91C2D4)
+val TunerGreen=Color(0xFF83D1AC)
+val TunerFlat=Color(0xFFE4848D)
+val TunerSharp=Color(0xFFE0B679)
 private val colors=darkColorScheme(
-    primary=TunerGreen,onPrimary=Color(0xFF0C261C),secondary=Color(0xFF9FC4F9),
-    background=TunerBackground,surface=TunerPanel,surfaceVariant=Color(0xFF30343D),
-    onSurface=Color(0xFFF3F5F8),onBackground=Color(0xFFF3F5F8),
-    onSurfaceVariant=Color(0xFFBAC2CC),outline=Color(0xFF4C5663),error=TunerFlat
+    primary=TunerAccent,onPrimary=TunerBackground,secondary=TunerGreen,
+    background=TunerBackground,surface=TunerPanel,surfaceVariant=TunerSelection,
+    onSurface=Color(0xFFF0F3F5),onBackground=Color(0xFFF0F3F5),
+    onSurfaceVariant=Color(0xFFB4C0C9),outline=TunerOutline,error=TunerFlat
 )
-private val shapes=Shapes(small=RoundedCornerShape(12.dp),medium=RoundedCornerShape(18.dp),large=RoundedCornerShape(24.dp))
-@Composable fun TunerTheme(content:@Composable ()->Unit){MaterialTheme(colorScheme=colors,shapes=shapes,content=content)}
+private val shapes=Shapes(small=RoundedCornerShape(10.dp),medium=RoundedCornerShape(14.dp),large=RoundedCornerShape(20.dp))
+@Composable fun TunerTheme(content:@Composable ()->Unit){
+    MaterialTheme(colorScheme=colors,shapes=shapes,content=content)
+}
