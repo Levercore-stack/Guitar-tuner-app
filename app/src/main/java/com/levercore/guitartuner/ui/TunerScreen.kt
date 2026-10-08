@@ -110,6 +110,21 @@ fun TunerScreen(){
             }
         }
 
+        // Cool ebony-charcoal fretboard contrasts with the blue tuning tray without brown tones.
+        Column(Modifier.fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
+            .background(TunerNeckFrame)
+            .border(BorderStroke(1.dp,TunerNeckBorder),RoundedCornerShape(20.dp))
+            .padding(10.dp),verticalArrangement=Arrangement.spacedBy(9.dp)){
+            Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,
+                verticalAlignment=Alignment.CenterVertically){
+                Text("GUITAR NECK",style=MaterialTheme.typography.labelMedium,color=TunerAccent,letterSpacing=2.sp)
+                Text("6 LOW  →  HIGH 1",style=MaterialTheme.typography.labelSmall,
+                    color=MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            GuitarNeck(tuning,stringIndex){stringIndex=it}
+        }
+
         // A distinct steel-blue tuning tray keeps presets visually grouped.
         Column(Modifier.fillMaxWidth()
             .clip(RoundedCornerShape(18.dp))
@@ -130,20 +145,6 @@ fun TunerScreen(){
                     if(rowPresets.size==1) Spacer(Modifier.weight(1f))
                 }
             }
-        }
-        // Cool ebony-charcoal fretboard contrasts with the blue tuning tray without brown tones.
-        Column(Modifier.fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(TunerNeckFrame)
-            .border(BorderStroke(1.dp,TunerNeckBorder),RoundedCornerShape(20.dp))
-            .padding(10.dp),verticalArrangement=Arrangement.spacedBy(9.dp)){
-            Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,
-                verticalAlignment=Alignment.CenterVertically){
-                Text("GUITAR NECK",style=MaterialTheme.typography.labelMedium,color=TunerAccent,letterSpacing=2.sp)
-                Text("6 LOW  →  HIGH 1",style=MaterialTheme.typography.labelSmall,
-                    color=MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            GuitarNeck(tuning,stringIndex){stringIndex=it}
         }
         Button(onClick={
             if(running){mic.stop();running=false;frequency=null;status="Microphone stopped."}
@@ -208,13 +209,14 @@ private fun GuitarNeck(tuning:GuitarTuning,selected:Int,onSelect:(Int)->Unit){
                                 RoundedCornerShape(5.dp))
                                 .padding(horizontal=6.dp,vertical=2.dp))
                         Surface(shape=RoundedCornerShape(11.dp),
-                            color=if(active)TunerAccent else Color(0xFF34434F),
-                            border=BorderStroke(1.dp,if(active)TunerAccent else TunerOutline)){
+                            color=if(active)TunerSelectedPreset else Color(0xFF34434F),
+                            border=BorderStroke(if(active)2.5.dp else 1.dp,
+                                if(active)TunerGold else TunerOutline)){
                             Column(Modifier.padding(horizontal=5.dp,vertical=7.dp),
                                 horizontalAlignment=Alignment.CenterHorizontally){
                                 Text(Tunings.noteName(midi),fontSize=20.sp,
                                     fontWeight=FontWeight.Black,maxLines=1,
-                                    color=if(active)TunerBackground else Color.White)
+                                    color=if(active)TunerGold else Color.White)
                             }
                         }
                     }
