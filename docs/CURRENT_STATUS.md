@@ -14,7 +14,8 @@ Updated 2026-10-08. ACTIVE: native Android v0.1 built; physical Google Pixel / a
 - Original action SHA ff2581e571e8702a803b34d209dc8dd78f1bc96a; source was then committed to main by GitHub Actions. Read current HEAD, not just this historical SHA.
 - GitHub Actions APK artifact 11580704554 named guitar-tuner-debug-apk (not expired when retrieved).
 - Verified debug APK sha256 d0edbaab807037d428a1a35fbcd587b18a1c12940a4dce9af814ae59adb1ef84, size 9478721 bytes. Compiled Android package archive checked for dex, manifest and resource table.
-- Exact debug test APK available as ChatGPT attachment in the active build session. Store direct Drive APK and its link when export/upload becomes available.
+- Exact debug test APK delivered as ChatGPT attachment in the active build session.
+- Permanent project Drive backup: https://drive.google.com/file/d/1jOhZw_3DTmbCbpS6jYuTOWNAkS6qCKpb/view . This is a GitHub Actions artifact ZIP containing `app-debug.apk`, not a standalone APK file. The exact standalone APK was also delivered as a direct ChatGPT attachment.
 - Readable GitHub source imported successfully. A redundant old CI workflow has been removed to prevent duplicate misleading failures.
 
 ## App scope and modularity
