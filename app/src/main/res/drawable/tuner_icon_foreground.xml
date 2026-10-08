@@ -1,15 +1,13 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <!-- Distinct single guitar pick silhouette, legible at 48 dp and round-mask safe. -->
-    <path android:fillColor="#152F41"
-        android:pathData="M54,20 C39,20 28,25 27,37 C26,50 40,71 50,85 C52,89 56,89 58,85 C68,71 82,50 81,37 C80,25 69,20 54,20 Z"/>
-    <path android:fillColor="#F4E9D3"
-        android:pathData="M54,24 C42,24 32,27 31,38 C31,50 44,69 52,81 C53,83 55,83 56,81 C65,69 77,50 77,38 C76,27 66,24 54,24 Z"/>
-    <path android:strokeColor="#376C7E" android:strokeWidth="3"
-        android:strokeLineCap="round"
-        android:pathData="M42,39 L65,54"/>
-    <path android:strokeColor="#376C7E" android:strokeWidth="3"
-        android:strokeLineCap="round"
-        android:pathData="M42,49 L61,62"/>
+    <!-- Inner dark medallion stays completely inside Android's circular icon safe zone. -->
+    <path android:fillColor="#90A9B8"
+        android:pathData="M54,24 A30,30 0,1 1,54,84 A30,30 0,1 1,54,24 Z"/>
+    <path android:fillColor="#112A3A"
+        android:pathData="M54,27 A27,27 0,1 1,54,81 A27,27 0,1 1,54,27 Z"/>
+    <!-- Small, broad-shouldered triangular plectrum, distinctly within the medallion. -->
+    <path android:fillColor="#F5EBD7" android:strokeColor="#C99D69"
+        android:strokeWidth="1.2" android:strokeLineJoin="round"
+        android:pathData="M54,35 C43,35 37,38 37,45 C37,52 46,64 52,72 C53.1,73.5 54.9,73.5 56,72 C62,64 71,52 71,45 C71,38 65,35 54,35 Z"/>
 </vector>

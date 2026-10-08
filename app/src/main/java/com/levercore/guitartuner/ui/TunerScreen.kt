@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.horizontalScroll
@@ -109,27 +110,41 @@ fun TunerScreen(){
             }
         }
 
-        Text("TUNING",style=MaterialTheme.typography.labelMedium,color=TunerAccent,letterSpacing=2.sp)
-        PresetTile(Tunings.presets[0], tuning.id==Tunings.presets[0].id,Modifier.fillMaxWidth()) {
-            tuning=Tunings.presets[0];stringIndex=0
-        }
-        Tunings.presets.drop(1).chunked(2).forEach { rowPresets ->
-            Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(9.dp)){
-                rowPresets.forEach { preset ->
-                    PresetTile(preset,tuning.id==preset.id,Modifier.weight(1f)){
-                        tuning=preset;stringIndex=0
+        // A distinct steel-blue tuning tray keeps presets visually grouped.
+        Column(Modifier.fillMaxWidth()
+            .clip(RoundedCornerShape(18.dp))
+            .background(TunerTuningPanel)
+            .border(BorderStroke(1.dp,TunerTuningBorder),RoundedCornerShape(18.dp))
+            .padding(14.dp),verticalArrangement=Arrangement.spacedBy(10.dp)){
+            Text("TUNING",style=MaterialTheme.typography.labelMedium,color=TunerAccent,letterSpacing=2.sp)
+            PresetTile(Tunings.presets[0], tuning.id==Tunings.presets[0].id,Modifier.fillMaxWidth()) {
+                tuning=Tunings.presets[0];stringIndex=0
+            }
+            Tunings.presets.drop(1).chunked(2).forEach { rowPresets ->
+                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(9.dp)){
+                    rowPresets.forEach { preset ->
+                        PresetTile(preset,tuning.id==preset.id,Modifier.weight(1f)){
+                            tuning=preset;stringIndex=0
+                        }
                     }
+                    if(rowPresets.size==1) Spacer(Modifier.weight(1f))
                 }
-                if(rowPresets.size==1) Spacer(Modifier.weight(1f))
             }
         }
-        Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,
-            verticalAlignment=Alignment.CenterVertically){
-            Text("GUITAR NECK",style=MaterialTheme.typography.labelMedium,color=TunerAccent,letterSpacing=2.sp)
-            Text("6 LOW  →  HIGH 1",style=MaterialTheme.typography.labelSmall,
-                color=MaterialTheme.colorScheme.onSurfaceVariant)
+        // The guitar neck uses a warmer, instrument-like slate distinct from tuning controls.
+        Column(Modifier.fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
+            .background(TunerNeckFrame)
+            .border(BorderStroke(1.dp,TunerNeckBorder),RoundedCornerShape(20.dp))
+            .padding(10.dp),verticalArrangement=Arrangement.spacedBy(9.dp)){
+            Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,
+                verticalAlignment=Alignment.CenterVertically){
+                Text("GUITAR NECK",style=MaterialTheme.typography.labelMedium,color=TunerAccent,letterSpacing=2.sp)
+                Text("6 LOW  →  HIGH 1",style=MaterialTheme.typography.labelSmall,
+                    color=MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            GuitarNeck(tuning,stringIndex){stringIndex=it}
         }
-        GuitarNeck(tuning,stringIndex){stringIndex=it}
         Button(onClick={
             if(running){mic.stop();running=false;frequency=null;status="Microphone stopped."}
             else if(permissionGranted)startMic()
@@ -148,12 +163,12 @@ private fun PresetTile(preset:GuitarTuning,selected:Boolean,
     modifier:Modifier=Modifier,onClick:()->Unit){
     Surface(onClick=onClick, modifier=modifier.height(46.dp),
         shape=RoundedCornerShape(12.dp),
-        color=if(selected)TunerSelection else TunerPanel,
-        border=BorderStroke(1.dp,if(selected)TunerAccent else TunerOutline)){
+        color=if(selected)TunerSelection else TunerPresetTile,
+        border=BorderStroke(1.dp,if(selected)TunerAccent else TunerTuningBorder)){
         Box(contentAlignment=Alignment.Center){
             Text(preset.name,style=MaterialTheme.typography.labelLarge,
                 fontWeight=if(selected)FontWeight.Bold else FontWeight.Medium,
-                color=if(selected)Color.White else Color(0xFFC6CDD4))
+                color=if(selected)Color.White else Color(0xFFE4EDF2))
         }
     }
 }
@@ -168,7 +183,7 @@ private fun GuitarNeck(tuning:GuitarTuning,selected:Int,onSelect:(Int)->Unit){
                 size=Size(cell,size.height))
             for(fret in 1..5){
                 val y=size.height*fret/6f
-                drawLine(Color(0xFF94A7B1).copy(alpha=0.55f),
+                drawLine(Color(0xFFD4C4A9).copy(alpha=0.50f),
                     Offset(0f,y),Offset(size.width,y),strokeWidth=1.5f)
             }
             for(i in 0..5){
@@ -188,12 +203,12 @@ private fun GuitarNeck(tuning:GuitarTuning,selected:Int,onSelect:(Int)->Unit){
                     Column(horizontalAlignment=Alignment.CenterHorizontally,
                         verticalArrangement=Arrangement.spacedBy(7.dp)){
                         Text((6-index).toString(),fontSize=11.sp,fontWeight=FontWeight.Bold,
-                            color=if(active)Color.White else Color(0xFFB0BAC3),
+                            color=if(active)Color.White else Color(0xFFE3E6E3),
                             modifier=Modifier.background(TunerNeck.copy(alpha=0.9f),
                                 RoundedCornerShape(5.dp))
                                 .padding(horizontal=6.dp,vertical=2.dp))
                         Surface(shape=RoundedCornerShape(11.dp),
-                            color=if(active)TunerAccent else Color(0xFF395364),
+                            color=if(active)TunerAccent else Color(0xFF3A4750),
                             border=BorderStroke(1.dp,if(active)TunerAccent else TunerOutline)){
                             Column(Modifier.padding(horizontal=5.dp,vertical=7.dp),
                                 horizontalAlignment=Alignment.CenterHorizontally){

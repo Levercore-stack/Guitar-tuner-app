@@ -11,7 +11,12 @@ import androidx.compose.ui.unit.dp
 // Lighter graphite / steel-blue. Preserve readable pitch-state colors.
 val TunerBackground=Color(0xFF263A49)
 val TunerPanel=Color(0xFF354E5E)
-val TunerNeck=Color(0xFF344958)
+val TunerNeck=Color(0xFF4A4C49)
+val TunerNeckFrame=Color(0xFF33424B)
+val TunerNeckBorder=Color(0xFF8F9189)
+val TunerTuningPanel=Color(0xFF45647A)
+val TunerTuningBorder=Color(0xFF779CAF)
+val TunerPresetTile=Color(0xFF2F4A5E)
 val TunerSelection=Color(0xFF486B7C)
 val TunerOutline=Color(0xFF7893A4)
 val TunerAccent=Color(0xFFC6E6F2)
