@@ -1,5 +1,5 @@
 # Guitar Tuner — current project status
-Updated 2026-10-08. ACTIVE: native Android v0.1 built; physical Google Pixel / actual guitar test remains outstanding.
+Updated 2026-10-08. ACTIVE: native Android v0.2 built; basic v0.1 Pixel pitch-response accepted by user; refined v0.2 UI awaits Pixel verification.
 
 ## Identity and authority
 - Official displayed app name: Guitar Tuner. User chooses name, visuals, features, privacy, and future maintenance.
@@ -32,4 +32,18 @@ Updated 2026-10-08. ACTIVE: native Android v0.1 built; physical Google Pixel / a
 - Do not claim actual Pixel tuner acceptance until user reports it. No third-party DSP dependency copied so far.
 
 ## Single next action
-Install the validated v0.1 test APK on Pixel and report whether the mic permission works and the low E/A/D/G/B/high E strings display plausible, stable pitch and cents. Record observations in project status and the workflow process-trial file; resolve octave errors in a bounded DSP pass after hardware evidence.
+Install v0.2 APK directly from Google Drive, check string-neck order and dynamic tuning labels, preset grid, graph-paper pitch marker and updated styling; report UX issues without changing the proven v0.1 DSP. Keep debug-signing upgrade caveat visible.
+
+## Guitar Tuner v0.2 — successful UX build (2026-10-08)
+- User's v0.1 real-Pixel check: installed/opened, microphone permission and start passed, detected pitch moved responsively when strings were played, preset changes worked. This is **basic on-device functional acceptance**, not a quantified cents/octave/hardware-permission regression suite.
+- User requested guitar-neck diagram: six vertical strings left-to-right 6 low to 1 high with target note labels centered directly on the strings; tapping each string selects the reference. All presets map to their own correct note set, including Open E.
+- Standard tuning is promoted to a full-width top preset; remaining five tuning choices form a two-column grid. The cents display uses subtle graph-paper lines and a moving diamond marker on a centered -50 to +50 scale.
+- Restrained industrial/futuristic/rock styling, graphite/slate-blue with gentle accents and angled title. The app no longer displays a NO ADS promotional line; business/privacy promise remains unchanged.
+- Only UI/TunerScreen.kt, UI/TunerTheme.kt and Android version fields changed; DSP and microphone capture, permission and lifecycle behavior are untouched.
+- GitHub source change https://github.com/Levercore-stack/Guitar-tuner-app/commit/c4513c12b4369e85caee2b3ab2c319bfe0a68baf
+- CI https://github.com/Levercore-stack/Guitar-tuner-app/actions/runs/37852027267 succeeded; v0.2 artifact ID 11582141697.
+- Verified standalone v0.2 app-debug.apk: 9,495,101 bytes; SHA-256 b5fe71971a05ed2dc23813de0edc69bcf6a08fa02f6ebe5e742ec66fbfc3dada, Android archive and artifact ZIP integrity passed.
+- **Direct standalone APK on project Drive:** https://drive.google.com/file/d/1GOZPAXh1Ik1RunDYIygEPK5Qk4tv6qax/view . Readback confirmed file MIME, size and project folder parent. No need to unzip GitHub Actions artifact to install.
+- Current functional acceptance gate: user install v0.2 on Pixel and assess string layout, note labels on all tunings, mobile readability and dynamic graph-paper cents marker. v0.2 physical device tests NOT YET REPORTED.
+- Signed debug APKs may use different signing identities across GitHub runners. If Android refuses a normal install-over upgrade, user must be aware that uninstalling the earlier test copy clears app-local state. Do not claim seamless upgrading or production signing.
+- Process trial: https://docs.google.com/document/d/13EdsFBaSlfZ9SfIqOBxz6QrF-RgbNQIX3raIjyQYXnc/edit . Baseline Android workflow v1.0 remains locked and unchanged.
