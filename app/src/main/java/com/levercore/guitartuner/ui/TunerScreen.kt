@@ -85,10 +85,13 @@ fun TunerScreen(){
         cents<0->TunerFlat
         else->TunerSharp
     }
-    Column(Modifier.fillMaxSize().background(TunerBackground).verticalScroll(rememberScrollState()).padding(horizontal=16.dp,vertical=14.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
+    Column(Modifier.fillMaxSize().background(TunerBackground)
+        .windowInsetsPadding(WindowInsets.safeDrawing)
+        .verticalScroll(rememberScrollState())
+        .padding(start=16.dp,end=16.dp,top=38.dp,bottom=14.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
         Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween,verticalAlignment=Alignment.CenterVertically){
-            Column{Text("GUITAR TUNER",fontSize=29.sp,fontWeight=FontWeight.Black,fontStyle=androidx.compose.ui.text.font.FontStyle.Italic,letterSpacing=1.0.sp)
-                Text("PRECISION / SIX STRING",style=MaterialTheme.typography.labelSmall,color=MaterialTheme.colorScheme.onSurfaceVariant)}
+            Column{Text("GUITAR TUNER",fontSize=30.sp,fontWeight=FontWeight.Black,fontStyle=androidx.compose.ui.text.font.FontStyle.Italic,letterSpacing=1.2.sp,color=Color.White)
+                Text("PRECISION / SIX STRING",style=MaterialTheme.typography.labelSmall,color=TunerAccent)}
             Text(if(running)"● LISTENING" else "○ MIC OFF",color=if(running)TunerGreen else MaterialTheme.colorScheme.onSurfaceVariant,style=MaterialTheme.typography.labelSmall)
         }
         Card(Modifier.fillMaxWidth(),colors=CardDefaults.cardColors(containerColor=TunerPanel)){
@@ -165,12 +168,12 @@ private fun GuitarNeck(tuning:GuitarTuning,selected:Int,onSelect:(Int)->Unit){
                 size=Size(cell,size.height))
             for(fret in 1..5){
                 val y=size.height*fret/6f
-                drawLine(Color(0xFF4C5965).copy(alpha=0.60f),
+                drawLine(Color(0xFF94A7B1).copy(alpha=0.55f),
                     Offset(0f,y),Offset(size.width,y),strokeWidth=1.5f)
             }
             for(i in 0..5){
                 val x=cell*(i+0.5f)
-                drawLine(if(i==selected)TunerAccent else Color(0xFFA3AFBB),
+                drawLine(if(i==selected)TunerAccent else Color(0xFFDAE5EB),
                     Offset(x,0f),Offset(x,size.height),
                     strokeWidth=(3.4f-i*0.34f).dp.toPx(),cap=StrokeCap.Round)
             }
@@ -190,15 +193,13 @@ private fun GuitarNeck(tuning:GuitarTuning,selected:Int,onSelect:(Int)->Unit){
                                 RoundedCornerShape(5.dp))
                                 .padding(horizontal=6.dp,vertical=2.dp))
                         Surface(shape=RoundedCornerShape(11.dp),
-                            color=if(active)TunerAccent else Color(0xFF263039),
+                            color=if(active)TunerAccent else Color(0xFF395364),
                             border=BorderStroke(1.dp,if(active)TunerAccent else TunerOutline)){
                             Column(Modifier.padding(horizontal=5.dp,vertical=7.dp),
                                 horizontalAlignment=Alignment.CenterHorizontally){
                                 Text(Tunings.noteName(midi),fontSize=20.sp,
                                     fontWeight=FontWeight.Black,maxLines=1,
                                     color=if(active)TunerBackground else Color.White)
-                                Text((midi/12-1).toString(),fontSize=10.sp,
-                                    color=if(active)TunerBackground else Color(0xFFB9C4CC))
                             }
                         }
                     }
@@ -215,7 +216,7 @@ private fun GriddedPitchMeter(cents:Double?,color:Color){
             val pad=14.dp.toPx()
             val usable=size.width-2*pad
             val midY=size.height*0.52f
-            val grid=Color(0xFF44525F)
+            val grid=Color(0xFF91ADBC)
             for(i in 0..20){
                 val x=pad+usable*i/20f
                 drawLine(grid.copy(alpha=if(i%5==0)0.54f else 0.23f),
@@ -227,7 +228,7 @@ private fun GriddedPitchMeter(cents:Double?,color:Color){
                 drawLine(grid.copy(alpha=if(j==3)0.52f else 0.22f),
                     Offset(pad,y),Offset(size.width-pad,y),strokeWidth=1f)
             }
-            drawLine(Color(0xFF81939E),Offset(pad,midY),
+            drawLine(Color(0xFFBACBD4),Offset(pad,midY),
                 Offset(size.width-pad,midY),strokeWidth=2f)
             drawLine(TunerGreen.copy(alpha=0.7f),
                 Offset(size.width/2f,0f),Offset(size.width/2f,size.height),strokeWidth=2.5f)
