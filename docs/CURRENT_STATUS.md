@@ -1,5 +1,5 @@
 # Guitar Tuner — current project status
-Updated 2026-10-08. ACTIVE: native Android v0.2 built; basic v0.1 Pixel pitch-response accepted by user; refined v0.2 UI awaits Pixel verification.
+Updated 2026-10-08. Current latest native stable-signed build v0.2.2 (versionCode 4), UI refinements from user Pixel feedback. User acceptance and live in-place signer continuity still pending.
 
 ## Identity and authority
 - Official displayed app name: Guitar Tuner. User chooses name, visuals, features, privacy, and future maintenance.
@@ -32,7 +32,7 @@ Updated 2026-10-08. ACTIVE: native Android v0.2 built; basic v0.1 Pixel pitch-re
 - Do not claim actual Pixel tuner acceptance until user reports it. No third-party DSP dependency copied so far.
 
 ## Single next action
-Install v0.2 APK directly from Google Drive, check string-neck order and dynamic tuning labels, preset grid, graph-paper pitch marker and updated styling; report UX issues without changing the proven v0.1 DSP. Keep debug-signing upgrade caveat visible.
+On Pixel, install v0.2.2 signed APK directly over already-installed v0.2.1 WITHOUT uninstalling; verify updated launcher pick icon, brighter labels/panels, safe status/navigation inset and no octave numbers under neck letters. Report if the update retained permission/state and mic stays responsive.
 
 ## Guitar Tuner v0.2 — successful UX build (2026-10-08)
 - User's v0.1 real-Pixel check: installed/opened, microphone permission and start passed, detected pitch moved responsively when strings were played, preset changes worked. This is **basic on-device functional acceptance**, not a quantified cents/octave/hardware-permission regression suite.
@@ -62,3 +62,15 @@ The next APK must use a new Guitar Tuner-only persistent signing certificate. Ke
 - Migration note: prior v0.1/v0.2 debug APKs were signed under different ephemeral identities. The newly signed v0.2.1 APK cannot install over them using Android's standard update path. User consented to uninstalling prior disposable prototype once; warn before data loss. Later builds **must reuse same private P12 certificate** with strictly increasing `versionCode` to permit in-place updates.
 - Future build recipe: `docs/PRIVATE_SIGNING_PROCESS_v0.2.1.md` and `scripts/sign_private_release.sh`. Signing happens outside public GitHub; the private key must be kept recoverable.
 - **Acceptance pending:** user installs v0.2.1 on Pixel and verifies guitar neck UI, pitch meter, permission/tunings; a later signed v0.2.2+ over-the-top install must be tested before calling update-path proof fully accepted.
+
+## Latest Guitar Tuner release — v0.2.2 signed (2026-10-08)
+- User Pixel feedback from the first stable-signed app: neck is better; keep thick-to-thin strings, frets and presets. Octave numbers below neck notes are unwanted. Interface is too dark, header nearly invisible/under status bar, and old launcher icon unappealing.
+- Changed **only presentation and launcher visuals**, Android system insets, version fields: remove mini octave numbers below six neck note labels (the note names alone remain); keep pitch math/target octave in tuning meter and accessibility descriptions; brighten backdrop, panels, grid and string strokes; explicitly white guitar tuner header; reserve `WindowInsets.safeDrawing`, add extra margin below Android status icons/above gesture bar, make OS status/nav icons light. Minimalist ivory pick on blue as adaptive/legacy launcher icon.
+- Kotlin pitch detection, microphone adapter, existing user preset mappings and string positions **unchanged**.
+- Visual source commit: https://github.com/Levercore-stack/Guitar-tuner-app/commit/18d7a4dcdea79b3820854d4ee6d17f4b66452fb3 .
+- GitHub Actions v0.2.2 run `37855516302` **COMPLETED SUCCESS**: https://github.com/Levercore-stack/Guitar-tuner-app/actions/runs/37855516302 . Unsigned release artifact `11584146396` checked before signing.
+- Exact v0.2.2 standalone signed APK: `Guitar_Tuner_v0.2.2_Stable_Signed.apk`, **6,511,115 bytes**, SHA256 `3f011c45fddf0f27ebad78081631e34b21ee5212b235f887dd7ead9c748668ff`. APK verified with Android `apksigner` v2+v3 signatures, ZIP integrity, AndroidManifest.xml, classes.dex and resources. Same signer SHA256 `F3:29:47:E4:43:FB:9A:39:0F:83:47:58:6E:75:A8:5D:95:46:37:93:AE:45:CF:58:2D:67:74:09:9F:22:2E:6F` as signed v0.2.1. Used **same private P12 file** from personal protected Library/local workspace; no replacement key created.
+- **Raw APK for direct Pixel download on existing Guitar Tuner project Google Drive:** https://drive.google.com/file/d/1U-6g_VhTekFB_JHnC3tJcNHKscV9mfSQ/view . Drive metadata readback confirmed native Android APK MIME, exact 6511115 bytes and project parent `1XB9aYuhxyCvNLGWOP_AYEacFuxmi1zEw`. User needs no intermediary download/re-upload or ZIP extraction.
+- One-off signing-script defect discovered in this pass: `--ks-pass file` and `--key-pass file` consumed the same one-line password file twice, producing EOF; corrected script to use **PKCS12 keystore password once**, after which the APK signing and certificate verification passed. Fixed in GitHub commit `1ab7fcb270af5ee5bd21e0e2d73f9eb6799da345`.
+- **Hardware acceptance still pending**: user should install v0.2.2 on top of stable-signed v0.2.1 without uninstall, test updated home icon, note-only neck labels, brightness, top/bottom inset, microphone and state retention. Local APK cryptography verification ≠ actual Pixel over-install test; do not mark same-signer update fully accepted until user reports.
+- Reusable Android locked baseline v1.0 stays unchanged; process-trial doc holds v0.2.2 user feedback and signed update evidence.
