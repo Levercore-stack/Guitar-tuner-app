@@ -9,11 +9,12 @@ fi
 for filename in "$1" "$2" "$3" "$4"; do
   test -s "$filename" || { echo "Missing required private/build file: $filename" >&2; exit 3; }
 done
+# PKCS12 uses one store/key password; reading a one-line file twice exhausts it.
 java -jar "$1" sign \
   --ks "$2" \
   --ks-type PKCS12 \
   --ks-key-alias guitar-tuner-prototype-v1 \
-  --ks-pass "file:$3" --key-pass "file:$3" \
+  --ks-pass "file:$3" \
   --out "$5" "$4"
 java -jar "$1" verify --verbose --print-certs "$5"
 sha256sum "$5"
