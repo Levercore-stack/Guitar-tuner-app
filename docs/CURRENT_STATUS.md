@@ -47,3 +47,6 @@ Install v0.2 APK directly from Google Drive, check string-neck order and dynamic
 - Current functional acceptance gate: user install v0.2 on Pixel and assess string layout, note labels on all tunings, mobile readability and dynamic graph-paper cents marker. v0.2 physical device tests NOT YET REPORTED.
 - Signed debug APKs may use different signing identities across GitHub runners. If Android refuses a normal install-over upgrade, user must be aware that uninstalling the earlier test copy clears app-local state. Do not claim seamless upgrading or production signing.
 - Process trial: https://docs.google.com/document/d/13EdsFBaSlfZ9SfIqOBxz6QrF-RgbNQIX3raIjyQYXnc/edit . Baseline Android workflow v1.0 remains locked and unchanged.
+
+## Upcoming signing gate
+The next APK must use a new Guitar Tuner-only persistent signing certificate. Keep private key material out of the public repository; store it in protected GitHub Actions secrets, then verify two successive APKs have matching certificate fingerprints. The older v0.2 test build was signed by a temporary runner identity, so the first stable-signer install requires one user-approved clean install. The existing v0.2 APK remains saved directly in the project Drive folder.
