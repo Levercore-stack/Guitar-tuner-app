@@ -14,4 +14,6 @@ This is a personal/development signing process. The **public GitHub repository c
 - The existing v0.1/v0.2 apps were signed by ephemeral CI debug identities. They are **not compatible** with this new certificate; user has explicitly approved one clean uninstall/reinstall of test state to migrate. Do not silently delete state. The first **real upgrade proof** occurs when a later APK with the same private signer installs over signed v0.2.1 without uninstalling.
 - No analytics, subscriptions, payments, ads or audio upload. Hardware acceptance remains user-reported.
 
-**Status 2026-10-08:** Key generated and privately backed up. First release signing and Android Pixel confirmation pending CI completion.
+**Status 2026-10-08:** Dedicated PKCS12 key privately backed up. Signed v0.2.1 and v0.2.2 APKs were built and certificate-verified with this exact key. v0.2.2 GitHub run 37855516302 SUCCESS; signed APK SHA256 `3f011c45fddf0f27ebad78081631e34b21ee5212b235f887dd7ead9c748668ff` is directly on project Drive at https://drive.google.com/file/d/1U-6g_VhTekFB_JHnC3tJcNHKscV9mfSQ/view . Actual Pixel install-over update acceptance pending user report.
+
+**PKCS12 script correction:** Passing `--ks-pass file:PASSFILE` and `--key-pass file:PASSFILE` makes apksigner consume two lines, but our password file has one line. Use only `--ks-pass file:PASSFILE`; the PKCS12 key uses the same keystore password. Public signing script fixed 2026-10-08. Never print the password or store it in GitHub source.
