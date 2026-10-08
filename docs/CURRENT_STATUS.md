@@ -1,5 +1,5 @@
 # Guitar Tuner — current project status
-Updated 2026-10-08. Current latest native stable-signed build v0.2.2 (versionCode 4), UI refinements from user Pixel feedback. User acceptance and live in-place signer continuity still pending.
+Updated 2026-10-08. Current native stable-signed v0.2.3 (versionCode 5). User reported v0.2.2 installed over v0.2.1 successfully, establishing real-Pixel signer-continuity acceptance. v0.2.3 visual appearance/hardware acceptance pending.
 
 ## Identity and authority
 - Official displayed app name: Guitar Tuner. User chooses name, visuals, features, privacy, and future maintenance.
@@ -32,7 +32,7 @@ Updated 2026-10-08. Current latest native stable-signed build v0.2.2 (versionCod
 - Do not claim actual Pixel tuner acceptance until user reports it. No third-party DSP dependency copied so far.
 
 ## Single next action
-On Pixel, install v0.2.2 signed APK directly over already-installed v0.2.1 WITHOUT uninstalling; verify updated launcher pick icon, brighter labels/panels, safe status/navigation inset and no octave numbers under neck letters. Report if the update retained permission/state and mic stays responsive.
+On Pixel, install v0.2.3 signed APK directly OVER v0.2.2 without uninstalling. Verify differentiated TUNING panel, warmer GUITAR NECK frame and smaller pick enclosed in circular medallion. Continue checking mic response and Android in-place installation. Preserve app-local state.
 
 ## Guitar Tuner v0.2 — successful UX build (2026-10-08)
 - User's v0.1 real-Pixel check: installed/opened, microphone permission and start passed, detected pitch moved responsively when strings were played, preset changes worked. This is **basic on-device functional acceptance**, not a quantified cents/octave/hardware-permission regression suite.
@@ -74,3 +74,12 @@ The next APK must use a new Guitar Tuner-only persistent signing certificate. Ke
 - One-off signing-script defect discovered in this pass: `--ks-pass file` and `--key-pass file` consumed the same one-line password file twice, producing EOF; corrected script to use **PKCS12 keystore password once**, after which the APK signing and certificate verification passed. Fixed in GitHub commit `1ab7fcb270af5ee5bd21e0e2d73f9eb6799da345`.
 - **Hardware acceptance still pending**: user should install v0.2.2 on top of stable-signed v0.2.1 without uninstall, test updated home icon, note-only neck labels, brightness, top/bottom inset, microphone and state retention. Local APK cryptography verification ≠ actual Pixel over-install test; do not mark same-signer update fully accepted until user reports.
 - Reusable Android locked baseline v1.0 stays unchanged; process-trial doc holds v0.2.2 user feedback and signed update evidence.
+
+## Guitar Tuner v0.2.3 — grouped panels and smaller circular pick (2026-10-08)
+- **Real Pixel update gate now passed for v0.2.1→v0.2.2:** user explicitly reported v0.2.2 installed over existing v0.2.1 without uninstall. User said overall brightened presentation looks much better. This is successful real-device update compatibility for these two signed prototype APKs; unrelated detailed mic/pitch accuracy gates are still open.
+- User requested two last visual refinements: guitar neck/strings and TUNING choices should no longer visually blend into overall background, while preserving the successful screen, existing guitar-neck thickness/order/note labels and scrolling/insets. Existing icon resembled a turnip, so make the guitar pick smaller and broad-shouldered, completely inside a **darker circle** and within round Pixel adaptive launcher safe zone.
+- Source UI-only commit https://github.com/Levercore-stack/Guitar-tuner-app/commit/aea67d606670feed5cb4a77eee1049f7b7fe0cc2 . New UI named palette colors `TunerTuningPanel`, `TunerTuningBorder`, `TunerPresetTile`, `TunerNeckFrame`, `TunerNeckBorder`; existing choice tiles wrapped in blue steel section while existing guitar-neck drawing placed in warmer stone/slate framed section. Launcher adaptive/legacy XML resources redrawn to pale ivory smaller triangular pick in dark blue circular medallion with neutral rim. No pitch-domain/audio/preset changes; package `com.levercore.guitartuner` unchanged.
+- App `versionCode=5`, `versionName=0.2.3`. GitHub Actions run **37857433531 COMPLETED SUCCESS**: https://github.com/Levercore-stack/Guitar-tuner-app/actions/runs/37857433531 . Unsigned release artifact `11585205173` extracted and tested; standard Android apksigner signed it outside the public repository.
+- Reused EXACT original protected Guitar Tuner signing key, not a replacement; signing certificate SHA256 **`f32947e443fb9a390f8347586e75a85d95463793ae45cf582d6774099f222e6f`** verified on both previous v0.2.2 and new v0.2.3. APK v2/v3 signature verification PASS, ZIP integrity passed and standard dex/manifest/resources present.
+- Raw native standalone `Guitar_Tuner_v0.2.3_Stable_Signed.apk`: **6,511,115 bytes**, SHA256 **`a6b1ecd2448626f67886f63bc3fa446d808ddb45e9a7a699231b239a486d9ca9`**. **Direct Google Drive for Pixel** https://drive.google.com/file/d/1gVmo12mTbwtsqYaWlXnxlTwJnyuIpRBq/view . Drive metadata readback confirmed exact name, size, `application/vnd.android.package-archive` MIME and correct existing project folder ID `1XB9aYuhxyCvNLGWOP_AYEacFuxmi1zEw`. No ZIP extraction or manual upload required.
+- User acceptance pending for v0.2.3 icon and section contrast. User should install OVER v0.2.2 without uninstall, visually inspect and report. Previous v0.2.2 installed over v0.2.1 on phone **was** reported successful and should no longer be labeled merely pending in current summary.
