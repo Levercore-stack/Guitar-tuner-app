@@ -70,6 +70,32 @@ jobs:
               git push origin HEAD:main
             fi
           fi
+      - name: Compile unsigned release APK for protected offline signing
+        run: gradle --no-daemon :app:assembleRelease
+      - name: Verify unsigned release output
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s app/build/outputs/apk/release/app-release-unsigned.apk
+          sha256sum app/build/outputs/apk/release/app-release-unsigned.apk
+      - name: Upload unsigned release for protected signing
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-tuner-unsigned-release
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          if-no-files-found: error
+      - name: Prepare standard Android APK signing utility
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$ANDROID_HOME/build-tools/35.0.0/lib/apksigner.jar"
+          cp "$ANDROID_HOME/build-tools/35.0.0/lib/apksigner.jar" "$RUNNER_TEMP/apksigner.jar"
+      - name: Upload nonsecret APK signing utility
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build-tools-apksigner
+          path: ${{ runner.temp }}/apksigner.jar
+          if-no-files-found: error
       - name: Upload Guitar Tuner APK
         uses: actions/upload-artifact@v4
         with:
